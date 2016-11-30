@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Psychic Game</title>
+</head>
+<body>
+
+<h1>The Psychic Game</h1>
+<h2>Guess what letter I'm thinking of</h2>
+
+<p id="winner"></p>
+<p id="loser"></p>
+<p id="guessCounter"></p>
+<p id="showGuess"></p>
+
+<script type="text/javascript">
+
+var numberGames = 5;
+var numberGuesses = 2;
+var Wins = 0;
+var Loses = 0;
+var computerGuess;
+var myGuess;
+var GuessLeft;
+var counterSuccess = 0;
+
+for (var j=0; j<numberGames; j++) {
+	computerGuess = Math.round(Math.random()*10);
+    console.log(computerGuess);
+
+    GuessLeft = numberGuesses;
+
+    for (var i=0; i<numberGuesses; i++) {
+    	myGuess = prompt("I am thinking of a number between 1 and 10. Can you guess?");
+
+	    if (myGuess == computerGuess) {
+        	counterSuccess = 1;
+	    	break;
+	    }
+
+    	GuessLeft = GuessLeft - 1;
+     
+        document.write("Guesses Left: " + GuessLeft + "<br>");
+        document.write("Your Guesses so far: " + myGuess + "<br>");
+    }
+
+    if (counterSuccess == 1) {
+	    Wins = Wins + 1;
+	    counterSuccess = 0;
+    } else {
+    	Loses = Loses + 1;
+    }
+
+    document.getElementById("winner").innerHTML = "<b> Wins: </b>" + Wins;
+    document.getElementById("loser").innerHTML = "<b> Loses: </b>" + Loses;
+}
+    
+
+</script>
+</body>
+</html>
