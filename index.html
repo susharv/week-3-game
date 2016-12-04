@@ -3,59 +3,76 @@
 <head>
 	<title>Psychic Game</title>
 </head>
+
 <body>
 
+<!-- html code -->
+<div id="game">
 <h1>The Psychic Game</h1>
 <h2>Guess what letter I'm thinking of</h2>
 
-<p id="winner"></p>
-<p id="loser"></p>
-<p id="guessCounter"></p>
-<p id="showGuess"></p>
+<p id="winner"><b> Wins: </b></p>
+<p id="loser"><b> Loses: </b></p>
+<p id="guesscounter"><b> Guesses Left: </b></p>
+<p id="showguess"><b> Your Guesses so far: </b></p>
+<input type="text" onkeypress="compareGuess()">
 
+<!-- script code -->
 <script type="text/javascript">
 
-var numberGames = 5;
-var numberGuesses = 2;
-var Wins = 0;
-var Loses = 0;
-var computerGuess;
-var myGuess;
-var GuessLeft;
-var counterSuccess = 0;
+// variables defined
+var Wins  = 0; // keeps track of total wins in the game
+var Loses = 0; // keeps track of total loses in the game
+var totalTries = 5; // number of user tries for guessing the correct alphabet
+var guessCounter = totalTries; // keeps track of the number of user tries left
+var flagSuccess = 0; // flag if the user wins
+var computerGuess; // random generated computer guess
+var userGuess =""; // string variable to show the output of the user guess at the beginning of each game
+var options; // variable to define an array of characters
+var guessString=""; // string variable that concatenates and tracks the user input
 
-for (var j=0; j<numberGames; j++) {
-	computerGuess = Math.round(Math.random()*10);
-    console.log(computerGuess);
+// array
+options = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 
-    GuessLeft = numberGuesses;
+// output to show the initial wins, loses and user tries 
+document.getElementById("winner").innerHTML = "<b> Wins: </b>" + Wins;
+document.getElementById("loser").innerHTML = "<b> Loses: </b>" + Loses;
+document.getElementById("guesscounter").innerHTML = "<b> Tries Left: </b>" + guessCounter;
 
-    for (var i=0; i<numberGuesses; i++) {
-    	myGuess = prompt("I am thinking of a number between 1 and 10. Can you guess?");
-
-	    if (myGuess == computerGuess) {
-        	counterSuccess = 1;
-	    	break;
-	    }
-
-    	GuessLeft = GuessLeft - 1;
-     
-        document.write("Guesses Left: " + GuessLeft + "<br>");
-        document.write("Your Guesses so far: " + myGuess + "<br>");
+// function define
+function compareGuess() {
+    if (guessCounter == totalTries) {
+        computerGuess = options[Math.floor(Math.random()*options.length)]; //random number generator
+        console.log(computerGuess);
     }
 
-    if (counterSuccess == 1) {
-	    Wins = Wins + 1;
-	    counterSuccess = 0;
-    } else {
-    	Loses = Loses + 1;
-    }
+    userGuess = String.fromCharCode(event.keyCode).toLowerCase(); //converts to lower case string value
+    if (userGuess == computerGuess) {  //compares user guess with computer guess
+        Wins = Wins + 1;               // win increments if condition true
+        flagSuccess = 1;               // use of flag to re-initiate a new game cycle
+    } 
 
-    document.getElementById("winner").innerHTML = "<b> Wins: </b>" + Wins;
-    document.getElementById("loser").innerHTML = "<b> Loses: </b>" + Loses;
+    guessCounter = guessCounter - 1;  //number of guesses decrement with each keypress
+    document.getElementById("guesscounter").innerHTML = "<b> Tries Left: </b>" + guessCounter; // output to show the user the number of guesses left
+
+    guessString = guessString + userGuess + ", "; //concatenation of characters entered at each key press
+    document.getElementById("showguess").innerHTML = "<b> Your Guesses so far: </b>" + guessString; //output to show the characters pressed so far
+   
+   if ((guessCounter == 0) && (flagSuccess == 0)) {  //condition to track the loses
+        Loses = Loses + 1;
+    } 
+
+    document.getElementById("winner").innerHTML = "<b> Wins: </b>" + Wins; // output of wins
+    document.getElementById("loser").innerHTML = "<b> Loses: </b>" + Loses; // output of loses
+
+    if ((flagSuccess == 1)  || (guessCounter == 0)) {   // use of flag to re-initiate a new game cycle
+        guessString = "";
+        guessCounter = totalTries;
+        flagSuccess = 0;
+    }
 }
-    
 
 </script>
+</div>
 </body>
 </html>
