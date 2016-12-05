@@ -47,6 +47,7 @@ function compareGuess() {
     }
 
     userGuess = String.fromCharCode(event.keyCode).toLowerCase(); //converts to lower case string value
+    
     if (userGuess == computerGuess) {  //compares user guess with computer guess
         Wins = Wins + 1;               // win increments if condition true
         flagSuccess = 1;               // use of flag to re-initiate a new game cycle

@@ -1,1 +1,1 @@
-<?php include_once("bootstrap-about.html"); ?>
+<?php include_once("index.html"); ?>
